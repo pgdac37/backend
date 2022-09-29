@@ -12,6 +12,8 @@ import com.pizza.dto.DtoEntityConvertor;
 import com.pizza.entities.DeliveryStatus;
 import com.pizza.entities.Users;
 import com.pizza.repo.DeliveryStatusDao;
+import com.pizza.repo.UserRepository;
+import com.pizza.security.EmailSender;
 
 @Service
 @Transactional
@@ -26,6 +28,12 @@ public class DeliveryStatusService {
 	@Autowired
     private ModelMapper modelMapper;
 
+	@Autowired
+	private EmailSender mailService;
+	
+	@Autowired
+	private UserRepository userRepo;
+	
 	//get list of delivery by userid
 	public List<DeliveryStatus> findByUserId(int userId) {
 		Users getDeliveries = new Users();
@@ -54,13 +62,17 @@ public class DeliveryStatusService {
 		return statusDao.findById(itemId).get();
 	}
 
-	public Object updateDeliveryStatus(int deliveryId, DeliveryStatus deliveryStatus) {
+	public String updateDeliveryStatus(int deliveryId, DeliveryStatus deliveryStatus) {
 		
 		DeliveryStatus updated = statusDao.findById(deliveryId).get();
 		updated.setDeliveryStatus(deliveryStatus.getDeliveryStatus());
 		statusDao.save(updated);
 		System.out.println(deliveryStatus);
-		return null;
+		
+		Users user = updated.getUsers();
+		mailService.sendEmail(user.getEmail(), "Changed Status: ", " delivery status updated to: " + deliveryStatus.getDeliveryStatus());
+		
+		return deliveryStatus.toString();
 	}
 
 //	@Autowired
