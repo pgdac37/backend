@@ -32,13 +32,13 @@ public class UserService {
 	@Autowired
 	private ModelMapper mapper;
 	@Autowired
-	private PasswordResetTokenRepository passwordTokenRepository;
+    private PasswordResetTokenRepository passwordTokenRepository;
 
 	// to check user by email
 	public Users searchByEmail(String email) {
 		Optional<Users> emailCheck = userRepo.findByEmail(email);
 		if (emailCheck.isEmpty())
-			return null;
+			throw new ResourceNotFoundException("invalid email");
 		else
 			return emailCheck.get();
 	}

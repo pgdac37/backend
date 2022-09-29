@@ -45,7 +45,7 @@ public class UserController {
 	
 	@Autowired
 	private JwtUtils utils;
-	// dep : Auth mgr
+	
 	@Autowired
 	private AuthenticationManager manager;
 	
