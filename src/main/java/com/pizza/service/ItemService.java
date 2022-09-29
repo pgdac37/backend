@@ -51,9 +51,9 @@ public class ItemService {
 	
 	public List<Item> getAllItems() {
 		
-		List<Item> listOfItemImages = itemDao.findAll();
+		List<Item> listOfItems = itemDao.findAll();
 		
-		return listOfItemImages;
+		return listOfItems;
 	}
 
 	public  Integer getLatestItemId() {
@@ -84,8 +84,14 @@ public class ItemService {
 	}
 
 	public void deleteItem(int itemId) {
-		itemSizeDao.deleteByItemId(itemId);
-		itemImageDao.deleteByItemId(itemId); 
+		
+//		if(itemSizeDao.findByItem(new Item(itemId)) != null)
+		if(itemSizeDao.existsByItem(new Item(itemId)))
+			itemSizeDao.deleteByItemId(itemId);
+		
+		if(itemImageDao.findByItem(new Item(itemId)) != null)
+			itemImageDao.deleteByItemId(itemId); 
+		
 		itemDao.deleteById(itemId);
 	}
 }

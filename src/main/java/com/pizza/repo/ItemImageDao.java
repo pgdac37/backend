@@ -14,10 +14,11 @@ public interface ItemImageDao extends JpaRepository<ItemImage, Integer>{
 	ItemImage findByItem(Item item);
 	
 	@Modifying
-	@Query(value="delete from itemimage WHERE itemId=?1",nativeQuery = true)
+	@Query(value="delete from itemImage WHERE itemId=?1",nativeQuery = true)
 	void deleteByItemId(int itemId);
 
 	@Modifying
-	@Query(value="update itemimage set data=?2 WHERE itemImgId=?1",nativeQuery = true)
-	void updateItemImage(int itemImgId, byte[] data);	
+	@Query(value="update itemImage set data=?2 WHERE itemImgId=?1",nativeQuery = true)
+	void updateItemImage(int itemImgId, byte[] data);
+
 }

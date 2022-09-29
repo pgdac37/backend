@@ -34,9 +34,9 @@ public class ItemSizeService {
 	
 	public ItemSize addItemSize(ItemSizeDto newItemSizeDto) {
 		Optional<Item> i = itemDao.findById(newItemSizeDto.getItemId());
-		Item n = new Item();
-		n.setItemid(i.get().getItemid());
-		ItemSize is = new ItemSize(n, newItemSizeDto.getSize(), newItemSizeDto.getPrice());
+//		Item n = new Item();
+//		n.setItemid(i.get().getItemid());
+		ItemSize is = new ItemSize(i.get(), newItemSizeDto.getSize(), newItemSizeDto.getPrice());
 		return itemSizeDao.save(is);
 	}
 

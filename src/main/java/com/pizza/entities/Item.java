@@ -31,4 +31,8 @@ public class Item  {
 	private String itemName;
 	private String description;
 	
+	public Item(int itemid) {
+		this.itemid = itemid;
+	}
+	
 }

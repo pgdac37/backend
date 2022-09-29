@@ -52,7 +52,12 @@ public class ToppingsService {
 	}
 
 	public void deleteTopping(int toppingId) {
-		toppingImgDao.deleteByToppingId(toppingId);
+		
+		Toppings topping = toppingDao.findById(toppingId).get();
+		
+		if(toppingImgDao.existsByToppings(topping))
+			toppingImgDao.deleteByToppingId(toppingId);
+		
 		toppingDao.deleteById(toppingId);
 	}
 }
